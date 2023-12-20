@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './pages/Home.jsx';
-import SignIn from "./pages/SignIn.js";
-import SignUp from "./pages/SignUpPage/SignUp.js";
-import About from "./pages/About.js";
-import Profile from "./pages/Profile.js";
-import Header from "./components/Header.js";
+import Home from './pages/Home.tsx';
+import SignIn from "./pages/SignInPage/index.tsx";
+import SignUp from "./pages/SignUpPage/index.tsx";
+import About from "./pages/About.tsx";
+import Profile from "./pages/Profile.tsx";
+import Header from "./components/Header.tsx";
 
 export default function App() {
   return (
