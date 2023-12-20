@@ -17,6 +17,7 @@ export default function SignUp() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
     try {
       setLoading(true);
 
@@ -33,6 +34,8 @@ export default function SignUp() {
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
+
+        return;
       }
 
       setLoading(false);
