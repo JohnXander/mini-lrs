@@ -15,7 +15,7 @@ mongoose
   })
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.API_PORT;
 
 app.use(express.json());
 
