@@ -36,7 +36,7 @@ Make sure you have the following installed on your machine:
     npm run dev
     ```
 
-This will start the frontend application and you can access it in your browser at http://localhost:3000.
+This will start the frontend application and you can access it in your browser at http://localhost:5173.
 
 #### Running the Backend
 
