@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FormData } from "./SignIn.types";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure
+} from '../../redux/user/userSlice.ts';
+import { RootState } from "../../redux/store.ts";
 
 export default function SignIn() {
   const [formData, setFormData] = useState<FormData>({});
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { loading, error } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -19,7 +26,7 @@ export default function SignIn() {
     e.preventDefault();
     
     try {
-      setLoading(true);
+      dispatch(signInStart());
 
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
@@ -32,18 +39,19 @@ export default function SignIn() {
       const data = await res.json();
 
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        dispatch(signInFailure(data.message));
 
         return;
       }
 
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error: unknown) {
-      setLoading(false);
-      setError((error as Error).message);
+      if (error instanceof Error) {
+        dispatch(signInFailure(error.message));
+      } else {
+        console.error('Unexpected error:', error);
+      }
     }
   }
 
