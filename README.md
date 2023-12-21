@@ -29,23 +29,23 @@ Make sure you have the following installed on your machine:
 
 3. Install dependencies for both the server and the client:
 
-  ```javascript
-  cd mini-lrs
-  ```
+    ```javascript
+    cd mini-lrs
+    ```
 
 #### Running the Frontend
 
 1. Change directory to client:
 
-  ```javascript
-  cd client
-  ```
+    ```javascript
+    cd client
+    ```
 
 2. Run the development server for the frontend:
 
-  ```javascript
-  npm run dev
-  ```
+    ```javascript
+    npm run dev
+    ```
 
 This will start the frontend application and you can access it in your browser at http://localhost:3000.
 
@@ -54,8 +54,8 @@ This will start the frontend application and you can access it in your browser a
 1. Open a separate terminal in the root of the project:
 2. Run the development server for the backend:
 
-  ```javascript
-  npm run dev
-  ```
+    ```javascript
+    npm run dev
+    ```
 
 This will start the server using nodemon, and it will be accessible at http://localhost:10000.
