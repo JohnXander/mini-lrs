@@ -22,8 +22,8 @@ Make sure you have the following installed on your machine:
 
 2. Navigate to the project directory:
 
-  ```bash
-  cd mini-lrs
+   ```bash
+   cd mini-lrs
 
 3. Install dependencies for both the server and the client:
 
