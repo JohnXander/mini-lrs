@@ -21,16 +21,10 @@ Make sure you have the following installed on your machine:
    git clone https://github.com/your-username/mini-lrs.git
    ```
 
-2. Navigate to the project directory:
-
-   ```javascript
-   cd mini-lrs
-   ```
-
-3. Install dependencies for both the server and the client:
+2. Install dependencies for both the server and the client:
 
     ```javascript
-    cd mini-lrs
+    npm install
     ```
 
 #### Running the Frontend
