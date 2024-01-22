@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from "../../firebase";
 import { FormData } from "./Profile.types";
+import { useDispatch } from "react-redux";
+import { 
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../../redux/user/userSlice";
 
 export default function Profile() {
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -12,6 +18,7 @@ export default function Profile() {
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState<FormData>({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (file){
@@ -43,12 +50,37 @@ export default function Profile() {
     );
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value});
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      if (!currentUser) {
+        throw new Error('User is not authenticated.');
+      }
+
+      dispatch(updateUserStart());
+
+      const res = await fetch(`/api/user/update/${currentUser._id}`)
+      console.log(res);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(updateUserFailure(error.message));
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+  }
+
   return (
    <div className="p-3 max-w-lg mx-auto">
     <h1 className="text-3xl font-semibold text-center my-7">
       Profile
     </h1>
-    <form className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <input 
         type="file" 
         ref={fileRef} 
@@ -87,19 +119,24 @@ export default function Profile() {
         id="username"
         type="text"
         placeholder="username"
+        defaultValue={currentUser?.username}
         className="border p-3 rounded-lg"
+        onChange={handleChange}
       />
       <input
         id="email"
         type="email"
         placeholder="email"
+        defaultValue={currentUser?.email}
         className="border p-3 rounded-lg"
+        onChange={handleChange}
       />
       <input
         id="password"
         type="password"
         placeholder="password"
         className="border p-3 rounded-lg"
+        onChange={handleChange}
       />
       <button 
         className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
