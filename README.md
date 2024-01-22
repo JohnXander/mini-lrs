@@ -1,6 +1,6 @@
 # Mini LRS
 
-Mini LRS (Learning Record Store) is a lightweight learning analytics system designed for simplicity and ease of use.
+Mini LRS (Learning Record Store) is a lightweight learning analytics system.
 
 ## Getting Started
 
