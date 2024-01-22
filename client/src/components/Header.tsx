@@ -39,7 +39,8 @@ export default function Header() {
               currentUser ? (
                 <img 
                   // @ts-expect-error: Temporary workaround for incomplete type information
-                  src={currentUser.avatar} alt="profile"
+                  src={currentUser.avatar} 
+                  alt="profile"
                   className='rounded-full h-7 w-7 object-cover'
                 />
               ) : (
