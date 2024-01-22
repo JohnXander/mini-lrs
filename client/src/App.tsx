@@ -3,7 +3,7 @@ import Home from './pages/Home.tsx';
 import SignIn from "./pages/SignInPage/index.tsx";
 import SignUp from "./pages/SignUpPage/index.tsx";
 import About from "./pages/About.tsx";
-import Profile from "./pages/Profile.tsx";
+import Profile from "./pages/Profile/index.tsx";
 import Header from "./components/Header.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 
