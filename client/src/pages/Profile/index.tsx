@@ -13,11 +13,12 @@ import {
 
 export default function Profile() {
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser, loading, error } = useSelector((state: RootState) => state.user);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState<FormData>({});
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,8 +65,24 @@ export default function Profile() {
 
       dispatch(updateUserStart());
 
-      const res = await fetch(`/api/user/update/${currentUser._id}`)
-      console.log(res);
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(updateUserFailure(error.message));
@@ -140,8 +157,9 @@ export default function Profile() {
       />
       <button 
         className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+        disabled={loading}
       >
-        Update
+        { loading ? 'Loading...' : 'Update' }
       </button>
     </form>
     <div className="flex justify-between mt-5">
@@ -154,6 +172,8 @@ export default function Profile() {
         Sign out
       </span>
     </div>
+    <p className="text-red-700 mt-5">{ error ? error : '' }</p>
+    <p className="text-green-700 mt-5">{ updateSuccess ? 'User updated successfully!' : '' }</p>
    </div>
   )
 }
