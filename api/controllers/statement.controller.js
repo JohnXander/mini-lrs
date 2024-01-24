@@ -7,7 +7,7 @@ export const receiveStatement = async (req, res, next) => {
     const statement = req.body;
 
     if (!validateStatement(statement)) {
-      return next(errorHandler(400, 'Invalid xAPI statement format.'));
+      return next(errorHandler(400, 'Invalid xAPI statement format!'));
     }
 
     const savedStatement = await Statement.create(statement);
@@ -17,3 +17,17 @@ export const receiveStatement = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllStatements = async (req, res, next) => {
+  try {
+    const allStatements = await Statement.find();
+
+    if(allStatements.length === 0){
+      return next(errorHandler(404, 'No statements found in the database!'));
+    }
+
+    res.status(200).json(allStatements);
+  } catch (error) {
+    next(error);
+  }
+}
