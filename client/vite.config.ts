@@ -9,6 +9,10 @@ export default defineConfig({
         target: 'http://localhost:10000',
         secure: false,
       },
+      '/xAPI': {
+        target: 'http://localhost:10000',
+        secure: false,
+      },
     },
   },
   plugins: [react()],
