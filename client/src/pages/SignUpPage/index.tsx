@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormData } from "./SignUp.types";
 
 export default function SignUp() {
-  const [formData, setFormData] = useState<FormData>({});
+  const [formData, setFormData] = useState<FormData>({
+    avatar: 'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
+  });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
