@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from "../../firebase";
 import { FormData } from "./Profile.types";
-import { useDispatch } from "react-redux";
 import { 
   updateUserStart,
   updateUserSuccess,
