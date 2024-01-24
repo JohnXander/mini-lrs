@@ -68,12 +68,23 @@ export default function Statements() {
       {loading && <p>Loading statements...</p>}
       {error && <p>Error: {error}</p>}
       {!loading && !error && (
-        <ul>
+        <ul className='flex flex-col gap-1'>
           {statements.map((statement, index) => (
-            <li className='flex gap-3' key={index}>
-              <p>{getActor(statement)}</p>
-              <p>{getVerb(statement)}</p>
-              <p>{getObject(statement)}</p>
+            <li 
+              className='flex gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200' 
+              key={index}>
+              <p 
+                className='text-slate-700'>
+                {getActor(statement)}
+              </p>
+              <p 
+                className='text-slate-700 font-bold'>
+                {getVerb(statement)}
+              </p>
+              <p 
+                className='text-blue-500'>
+                {getObject(statement)}
+              </p>
             </li>
           ))}
         </ul>
