@@ -29,9 +29,11 @@
     "mongoose": "^8.0.3",
     "nodemon": "^3.0.2",
     "react": "^18.2.0",
+    "react-modal": "^3.16.1",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
+    "@types/react-modal": "^3.16.3",
     "@types/redux-persist": "^4.3.1"
   }
 }
