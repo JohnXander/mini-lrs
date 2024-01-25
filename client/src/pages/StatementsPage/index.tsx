@@ -56,7 +56,7 @@ export default function Statements() {
       {error && <p>Error: {error}</p>}
       {!loading && !error && (
         <ul className='flex flex-col gap-1'>
-          {statements.map((statement, index) => (
+          {statements.slice().reverse().map((statement, index) => (
             <li 
               className='flex justify-between gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200' 
               key={index}
