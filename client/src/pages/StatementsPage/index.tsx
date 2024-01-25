@@ -8,7 +8,12 @@ import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 import { Statement } from './Statements.types';
 import StatementModal from './components/StatementModal';
-import { getActor, getObject, getVerb } from './utils/statementUtils';
+import { 
+  getActor, 
+  getObject, 
+  getVerb, 
+  getVerbEmoji 
+} from './utils/statementUtils';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function Statements() {
@@ -66,6 +71,7 @@ export default function Statements() {
               }}
             >
               <div className='flex gap-2 flex-wrap'>
+                {getVerbEmoji(statement)}
                 <p 
                   className='text-slate-700 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'
                   title={JSON.stringify(statement.actor, null, 2)}>
