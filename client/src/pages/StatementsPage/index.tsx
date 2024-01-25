@@ -65,14 +65,14 @@ export default function Statements() {
                 setIsModalOpen(true);
               }}
             >
-              <div className='flex gap-2'>
-                <p className='text-slate-700'>
+              <div className='flex gap-2 flex-wrap'>
+                <p className='text-slate-700 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'>
                   {getActor(statement)}
                 </p>
-                <p className='text-slate-700 font-bold'>
+                <p className='text-slate-700 font-bold max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'>
                   {getVerb(statement)}
                 </p>
-                <p className='text-blue-500'>
+                <p className='text-blue-500 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'>
                   {getObject(statement)}
                 </p>
               </div>
