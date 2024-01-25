@@ -13,4 +13,5 @@ export interface Statement {
     };
     id?: string;
   };
+  createdAt: string;
 }

@@ -24,6 +24,7 @@ export interface Statement {
   actor: Actor;
   verb: Verb;
   object: StatementObject;
+  createdAt: string;
 }
 
 export interface StatementState {
