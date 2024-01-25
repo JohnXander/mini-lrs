@@ -5,12 +5,16 @@ import {
   fetchStatementsFailure,
 } from '../../redux/statement/statementSlice';
 import { RootState } from '../../redux/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Statement } from './Statements.types';
+import StatementModal from './components/StatementModal';
+import { getActor, getObject, getVerb } from './utils/statementUtils';
 
 export default function Statements() {
   const dispatch = useDispatch();
   const { statements, loading, error } = useSelector((state: RootState) => state.statement);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedStatement, setSelectedStatement] = useState<Statement | null>(null);
 
   useEffect(() => {
     const fetchStatements = async () => {
@@ -42,24 +46,6 @@ export default function Statements() {
     fetchStatements();
   }, [dispatch]);
 
-  const getActor = (statement: Statement) => (
-    statement.actor?.name ||
-    statement.actor?.mbox ||
-    'Unknown Actor'
-  )
-
-  const getVerb = (statement: Statement) => (
-    statement.verb?.display?.[Object.keys(statement.verb?.display || {})[0]] ||
-    statement.verb?.id ||
-    'Unknown Verb'
-  )
-
-  const getObject = (statement: Statement) => (
-    statement.object?.definition?.name?.[Object.keys(statement.object?.definition?.name || {})[0]] ||
-    statement.object?.id ||
-    'Unknown Object'
-  )
-
   return (
     <div className="p-3 max-w-6xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
@@ -72,7 +58,12 @@ export default function Statements() {
           {statements.map((statement, index) => (
             <li 
               className='flex gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200' 
-              key={index}>
+              key={index}
+              onClick={() => {
+                setSelectedStatement(statement);
+                setIsModalOpen(true);
+              }}
+            >
               <p 
                 className='text-slate-700'>
                 {getActor(statement)}
@@ -88,6 +79,12 @@ export default function Statements() {
             </li>
           ))}
         </ul>
+      )}
+      {isModalOpen && selectedStatement && (
+        <StatementModal
+          statement={selectedStatement}
+          onRequestClose={() => setIsModalOpen(false)}
+        />
       )}
     </div>
   );
