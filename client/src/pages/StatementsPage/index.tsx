@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { Statement } from './Statements.types';
 import StatementModal from './components/StatementModal';
 import { getActor, getObject, getVerb } from './utils/statementUtils';
+import { formatDistanceToNow } from 'date-fns';
 
 export default function Statements() {
   const dispatch = useDispatch();
@@ -57,24 +58,26 @@ export default function Statements() {
         <ul className='flex flex-col gap-1'>
           {statements.map((statement, index) => (
             <li 
-              className='flex gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200' 
+              className='flex justify-between gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200' 
               key={index}
               onClick={() => {
                 setSelectedStatement(statement);
                 setIsModalOpen(true);
               }}
             >
-              <p 
-                className='text-slate-700'>
-                {getActor(statement)}
-              </p>
-              <p 
-                className='text-slate-700 font-bold'>
-                {getVerb(statement)}
-              </p>
-              <p 
-                className='text-blue-500'>
-                {getObject(statement)}
+              <div className='flex gap-2'>
+                <p className='text-slate-700'>
+                  {getActor(statement)}
+                </p>
+                <p className='text-slate-700 font-bold'>
+                  {getVerb(statement)}
+                </p>
+                <p className='text-blue-500'>
+                  {getObject(statement)}
+                </p>
+              </div>
+              <p className='text-gray-500'>
+                {formatDistanceToNow(new Date(statement.createdAt), { addSuffix: true })}
               </p>
             </li>
           ))}
