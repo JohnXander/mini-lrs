@@ -70,7 +70,7 @@ export default function Statements() {
                 setIsModalOpen(true);
               }}
             >
-              <div className='flex gap-2 flex-wrap'>
+              <div className='flex gap-1.5 flex-wrap'>
                 {getVerbEmoji(statement)}
                 <p 
                   className='text-slate-700 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'
