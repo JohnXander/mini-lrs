@@ -82,7 +82,9 @@ export default function Statements() {
                   {getObject(statement)}
                 </p>
               </div>
-              <p className='text-gray-500'>
+              <p 
+                className='text-gray-500'
+                title={new Date(statement.createdAt).toLocaleString()}>
                 {formatDistanceToNow(new Date(statement.createdAt), { addSuffix: true })}
               </p>
             </li>
