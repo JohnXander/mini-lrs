@@ -66,13 +66,19 @@ export default function Statements() {
               }}
             >
               <div className='flex gap-2 flex-wrap'>
-                <p className='text-slate-700 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'>
+                <p 
+                  className='text-slate-700 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'
+                  title={JSON.stringify(statement.actor, null, 2)}>
                   {getActor(statement)}
                 </p>
-                <p className='text-slate-700 font-bold max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'>
+                <p 
+                  className='text-slate-700 font-bold max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'
+                  title={JSON.stringify(statement.verb, null, 2)}>
                   {getVerb(statement)}
                 </p>
-                <p className='text-blue-500 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'>
+                <p 
+                  className='text-blue-500 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'
+                  title={JSON.stringify(statement.object, null, 2)}>
                   {getObject(statement)}
                 </p>
               </div>
