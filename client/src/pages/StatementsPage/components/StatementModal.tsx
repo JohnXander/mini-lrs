@@ -1,14 +1,11 @@
 import Modal from "react-modal";
-import { Statement } from "../Statements.types";
-
-interface StatementModalProps {
-  statement: Statement;
-  onRequestClose: () => void;
-}
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { StatementModalProps } from "./StatementModal.types";
 
 const StatementModal = ({ statement, onRequestClose }: StatementModalProps) => (
   <Modal
-    isOpen={true} // You can manage the modal state using the 'isOpen' prop
+    isOpen={true}
     onRequestClose={onRequestClose}
     style={{
       overlay: {
@@ -20,16 +17,18 @@ const StatementModal = ({ statement, onRequestClose }: StatementModalProps) => (
         left: "50%",
         transform: "translate(-50%, -50%)",
         width: "80%",
-        maxWidth: "600px",
+        maxWidth: "1000px",
         padding: "20px",
         borderRadius: "8px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+        color: "#334155",
+        backgroundColor: "rgb(241, 245, 241)",
       },
     }}
   >
     <div>
-      <button onClick={onRequestClose} style={{ float: "right" }}>
-        X
+      <button onClick={onRequestClose} className="float-right">
+        <FontAwesomeIcon icon={faTimes} />
       </button>
       <pre>{JSON.stringify(statement, null, 2)}</pre>
     </div>
