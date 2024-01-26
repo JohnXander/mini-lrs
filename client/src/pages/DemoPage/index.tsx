@@ -3,13 +3,20 @@ import { Quiz } from './components/Quiz';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { createAttemptedStatement } from './utils/demoUtils';
+import { Link } from 'react-router-dom';
 
 export default function Demo() {
   const [selectedQuiz, setSelectedQuiz] = useState<number | null>(null);
+  const [signInPrompt, setSignInPrompt] = useState<boolean>(false);
+  const [quizStarted, setQuizStarted] = useState<boolean>(false);
   const { currentUser, loading } = useSelector((state: RootState) => state.user);
 
-  const startQuiz = async (quizNumber: number) => {
+  const startQuiz = async (quizNumber: number | null) => {
     try {
+      if (!quizNumber) {
+        return;
+      }
+
       const attemptedStatement = createAttemptedStatement(currentUser, quizNumber)
 
       const res = await fetch('/xAPI/statement', {
@@ -26,11 +33,22 @@ export default function Demo() {
         return;
       }
 
-      setSelectedQuiz(quizNumber);
+      setQuizStarted(true);
     } catch (error: unknown) {
       console.log(error);
     }
   };
+
+  const handleQuizStart = (quizNumber: number) => {
+    if (!currentUser){
+      setSignInPrompt(true);
+      setSelectedQuiz(quizNumber)
+
+      return;
+    }
+
+    startQuiz(quizNumber);
+  }
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -47,14 +65,30 @@ export default function Demo() {
           <button
             key={quizNumber}
             className='bg-slate-700 text-white rounded-lg py-3 px-6 uppercase hover:opacity-95 disabled:opacity-80'
-            onClick={() => startQuiz(quizNumber)}
+            onClick={() => handleQuizStart(quizNumber)}
             disabled={loading}
           >
             {loading ? 'Loading...' : `Quiz ${quizNumber}`}
           </button>
         ))}
       </div>
-      {selectedQuiz && <Quiz quizNumber={selectedQuiz} />}
+      {signInPrompt && (
+        <p className='text-center'>
+          <span>
+            <Link to="/sign-in" className="text-blue-700 hover:underline">
+              Sign In
+            </Link>
+            <span> or </span>
+            <span
+              onClick={() => startQuiz(selectedQuiz)}
+              className="text-green-700 cursor-pointer hover:underline"
+            >
+              Continue as Guest
+            </span>
+          </span>
+        </p>
+      )}
+      {quizStarted && <Quiz quizNumber={selectedQuiz} />}
     </div>
   );
 }

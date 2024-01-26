@@ -1,5 +1,5 @@
 interface QuizProps {
-  quizNumber: number;
+  quizNumber: number | null;
 }
 
 export const Quiz = ({quizNumber}: QuizProps) => {
