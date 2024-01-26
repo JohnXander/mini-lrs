@@ -1,10 +1,8 @@
 export const verbEmojiMap = {
   launched: '🚀',
   completed: '🏆',
-  terminated: '🛑',
+  terminated: '❌',
   experienced: '🌐',
-  passed: '✅',
-  failed: '❌',
   viewed: '👀',
   attended: '🎓',
   interacted: '🤝',
