@@ -166,7 +166,7 @@ export default function Profile() {
       <img 
         src={formData.avatar ||currentUser?.avatar} 
         alt=""
-        className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+        className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2 hover:brightness-95"
         onClick={() => (fileRef.current as HTMLInputElement | null)?.click()}
       />
       <p className="text-sm self-center">
