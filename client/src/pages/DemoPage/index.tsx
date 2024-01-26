@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Quiz } from './components/Quiz';
+import { QuizModal } from './components/QuizModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { createAttemptedStatement } from './utils/demoUtils';
@@ -33,6 +33,7 @@ export default function Demo() {
         return;
       }
 
+      setSelectedQuiz(quizNumber);
       setQuizStarted(true);
     } catch (error: unknown) {
       console.log(error);
@@ -88,7 +89,12 @@ export default function Demo() {
           </span>
         </p>
       )}
-      {quizStarted && <Quiz quizNumber={selectedQuiz} />}
+      {quizStarted && selectedQuiz && (
+        <QuizModal 
+          quizNumber={selectedQuiz} 
+          onRequestClose={() => setQuizStarted(false)}
+        />
+      )}
     </div>
   );
 }
