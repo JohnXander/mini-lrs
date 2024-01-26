@@ -4,7 +4,7 @@ export const verbEmojiMap = {
   passed: '✅',
   failed: '❌',
   viewed: '👀',
-  attempted: '🔄',
+  attempted: '🚀',
   attended: '🎓',
   interacted: '🤝',
   commented: '💬',
@@ -21,5 +21,4 @@ export const verbEmojiMap = {
   collaborated: '🤝',
   reviewed: '🔍',
   researched: '🕵️‍♂️',
-  launched: '🚀',
 };
