@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice.ts';
+import guestUserReducer from './guestUser/guestUserSlice.ts';
 import statementReducer from './statement/statementSlice.ts';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({ 
   user: userReducer,
+  guestUser: guestUserReducer,
   statement: statementReducer
 });
 
