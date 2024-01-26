@@ -2,41 +2,15 @@ import { useState } from 'react';
 import { Quiz } from './components/Quiz';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { createAttemptedStatement } from './utils/demoUtils';
 
 export default function Demo() {
   const [selectedQuiz, setSelectedQuiz] = useState<number | null>(null);
   const { currentUser, loading } = useSelector((state: RootState) => state.user);
 
-  const generateRandomNumber = () => Math.floor(1000 + Math.random() * 9000);
-  const guestName = `Guest${generateRandomNumber()}`;
-  const guestEmail = `guest${generateRandomNumber()}@example.com`;
-
-  const attemptedStatement = {
-    "actor": {
-      "mbox": `mailto:${currentUser?.email || guestEmail}`,
-      "name": currentUser?.username || guestName,
-    },
-    "verb": {
-      "id": "http://adlnet.gov/expapi/verbs/attempted",
-      "display": {
-        "en": "attempted"
-      }
-    },
-    "object": {
-      "id": "http://example.com/quiz/course-id",
-      "definition": {
-        "type": "http://adlnet.gov/expapi/activities/course",
-        "name": {
-          "en": "Quiz"
-        }
-      }
-    }
-  }
-
   const startQuiz = async (quizNumber: number) => {
     try {
-      attemptedStatement.object.id = `http://example.com/quiz/quiz${quizNumber}`;
-      attemptedStatement.object.definition.name.en = `Quiz ${quizNumber}`;
+      const attemptedStatement = createAttemptedStatement(currentUser, quizNumber)
 
       const res = await fetch('/xAPI/statement', {
         method: 'POST',
