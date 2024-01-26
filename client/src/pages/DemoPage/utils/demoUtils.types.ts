@@ -6,6 +6,10 @@ export interface CreateStatementProps {
     password: string;
     avatar: string;
   } | null;
+  currentGuestUser: {
+    username: string;
+    email: string;
+  } | null;
   verb: string;
   quizNumber: number;
 }

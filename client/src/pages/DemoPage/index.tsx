@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import { QuizModal } from './components/QuizModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { createStatement } from './utils/demoUtils';
 import { Link } from 'react-router-dom';
+import {
+  createGuestUserFailure,
+  createGuestUserStart,
+  createGuestUserSuccess,
+} from '../../redux/guestUser/guestUserSlice';
 
 export default function Demo() {
   const [selectedQuiz, setSelectedQuiz] = useState<number | null>(null);
   const [signInPrompt, setSignInPrompt] = useState<boolean>(false);
   const [quizStarted, setQuizStarted] = useState<boolean>(false);
   const { currentUser, loading } = useSelector((state: RootState) => state.user);
+  const { currentGuestUser } = useSelector((state: RootState) => state.guestUser);
+  const dispatch = useDispatch();
 
   const startQuiz = async (quizNumber: number | null) => {
     try {
@@ -18,7 +25,8 @@ export default function Demo() {
       }
 
       const launchedStatement = createStatement({
-        currentUser, 
+        currentUser,
+        currentGuestUser,
         verb: 'launched', 
         quizNumber
       });
@@ -57,7 +65,8 @@ export default function Demo() {
 
   const closeQuiz = async (selectedQuiz: number) => {
     const terminatedStatement = createStatement({
-      currentUser, 
+      currentUser,
+      currentGuestUser,
       verb: 'terminated', 
       quizNumber: selectedQuiz
     });
@@ -77,6 +86,31 @@ export default function Demo() {
     }
     
     setQuizStarted(false)
+  }
+
+  const continueAsGuest = async () => {
+    dispatch(createGuestUserStart());
+
+    const generateRandomNumber = () => Math.floor(1000 + Math.random() * 9000);
+
+    try {
+      const randomGuestNumber = generateRandomNumber();
+      const guestName = `Guest${randomGuestNumber}`;
+      const guestEmail = `guest${randomGuestNumber}@example.com`;
+
+      dispatch(createGuestUserSuccess({
+        username: guestName,
+        email: guestEmail
+      }));
+
+      await startQuiz(selectedQuiz)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(createGuestUserFailure(error.message));
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
   }
 
   return (
@@ -109,7 +143,7 @@ export default function Demo() {
             </Link>
             <span> or </span>
             <span
-              onClick={() => startQuiz(selectedQuiz)}
+              onClick={continueAsGuest}
               className="text-green-700 cursor-pointer hover:underline"
             >
               Continue as Guest

@@ -1,16 +1,18 @@
 import { CreateStatementProps } from "./demoUtils.types";
 
-const generateRandomNumber = () => Math.floor(1000 + Math.random() * 9000);
-
-export const createStatement = ({ currentUser, verb, quizNumber}: CreateStatementProps) => {
-  const randomGuestNumber = generateRandomNumber();
-  const guestName = `Guest${randomGuestNumber}`;
-  const guestEmail = `guest${randomGuestNumber}@example.com`;
+export const createStatement = ({ 
+  currentUser, 
+  currentGuestUser,
+  verb, 
+  quizNumber
+}: CreateStatementProps) => {
+  const username = currentUser?.username || currentGuestUser?.username;
+  const email = currentUser?.email || currentGuestUser?.email;
 
   return {
     "actor": {
-      "mbox": `mailto:${currentUser?.email || guestEmail}`,
-      "name": currentUser?.username || guestName,
+      "mbox": `mailto:${email}`,
+      "name": username,
     },
     "verb": {
       "id": `http://adlnet.gov/expapi/verbs/${verb}`,
