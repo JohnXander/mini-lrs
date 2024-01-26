@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { StatementModalProps } from "./StatementModal.types";
 
-const StatementModal = ({ statement, onRequestClose }: StatementModalProps) => (
+export const StatementModal = ({ statement, onRequestClose }: StatementModalProps) => (
   <Modal
     isOpen={true}
     onRequestClose={onRequestClose}
@@ -34,5 +34,3 @@ const StatementModal = ({ statement, onRequestClose }: StatementModalProps) => (
     </div>
   </Modal>
 );
-
-export default StatementModal;

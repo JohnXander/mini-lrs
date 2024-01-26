@@ -7,7 +7,7 @@ import {
 import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 import { Statement } from './Statements.types';
-import StatementModal from './components/StatementModal';
+import { StatementModal } from './components/StatementModal';
 import { 
   getActor, 
   getObject, 
