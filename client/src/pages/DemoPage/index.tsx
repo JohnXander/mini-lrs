@@ -42,11 +42,11 @@ export default function Demo() {
         <p>There will only be 3 multiple-choice questions per quiz.</p>
         <p>Select a quiz to start:</p>
       </div>
-      <div className="text-center mb-5">
+      <div className="text-center mb-5 flex gap-3 flex-wrap justify-center">
         {[1, 2, 3].map((quizNumber) => (
           <button
             key={quizNumber}
-            className='bg-slate-700 text-white rounded-lg py-3 px-6 uppercase hover:opacity-95 disabled:opacity-80 mr-3'
+            className='bg-slate-700 text-white rounded-lg py-3 px-6 uppercase hover:opacity-95 disabled:opacity-80'
             onClick={() => startQuiz(quizNumber)}
             disabled={loading}
           >
