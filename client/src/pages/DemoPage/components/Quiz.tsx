@@ -1,7 +1,11 @@
-export const Quiz = () => {
+interface QuizProps {
+  quizNumber: number;
+}
+
+export const Quiz = ({quizNumber}: QuizProps) => {
   return (
     <div>
-      <p>Quiz.</p>
+      <p>{`Quiz ${quizNumber}`}</p>
     </div>
   );
 };

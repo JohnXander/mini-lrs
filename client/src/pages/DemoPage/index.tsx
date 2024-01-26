@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
 export default function Demo() {
-  const [quizStarted, setQuizStarted] = useState(false);
+  const [selectedQuiz, setSelectedQuiz] = useState<number | null>(null);
   const { currentUser, loading } = useSelector((state: RootState) => state.user);
 
   const generateRandomNumber = () => Math.floor(1000 + Math.random() * 9000);
@@ -33,8 +33,11 @@ export default function Demo() {
     }
   }
 
-  const startQuiz = async () => {
+  const startQuiz = async (quizNumber: number) => {
     try {
+      attemptedStatement.object.id = `http://example.com/quiz/quiz${quizNumber}`;
+      attemptedStatement.object.definition.name.en = `Quiz ${quizNumber}`;
+
       const res = await fetch('/xAPI/statement', {
         method: 'POST',
         headers: {
@@ -49,7 +52,7 @@ export default function Demo() {
         return;
       }
 
-      setQuizStarted(true);
+      setSelectedQuiz(quizNumber);
     } catch (error: unknown) {
       console.log(error);
     }
@@ -60,22 +63,24 @@ export default function Demo() {
       <h1 className="text-3xl font-semibold text-center my-7">
         Demo
       </h1>
-      {!quizStarted ? (
-        <div className="text-center">
-          <p className="mb-5">
-            This is a short quiz to show how an LMS interacts with an LRS.
-            There will only be 3 multiple-choice questions.
-          </p>
+      <div className="text-center mb-5">
+        <p>These are short quizzes to show how an LMS interacts with an LRS.</p>
+        <p>There will only be 3 multiple-choice questions per quiz.</p>
+        <p>Select a quiz to start:</p>
+      </div>
+      <div className="text-center mb-5">
+        {[1, 2, 3].map((quizNumber) => (
           <button
-            className="bg-slate-700 text-white rounded-lg py-3 px-6 uppercase hover:opacity-95 disabled:opacity-80"
-            onClick={startQuiz}
-            disabled={loading}>
-            { loading ? 'Loading...' : 'Start Quiz' }
+            key={quizNumber}
+            className='bg-slate-700 text-white rounded-lg py-3 px-6 uppercase hover:opacity-95 disabled:opacity-80 mr-3'
+            onClick={() => startQuiz(quizNumber)}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : `Quiz ${quizNumber}`}
           </button>
-        </div>
-      ) : (
-        <Quiz />
-      )}
+        ))}
+      </div>
+      {selectedQuiz && <Quiz quizNumber={selectedQuiz} />}
     </div>
   );
 }
