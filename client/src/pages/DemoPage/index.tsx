@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { QuizModal } from './components/QuizModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { createAttemptedStatement } from './utils/demoUtils';
+import { createLaunchedStatement } from './utils/demoUtils';
 import { Link } from 'react-router-dom';
 
 export default function Demo() {
@@ -17,14 +17,14 @@ export default function Demo() {
         return;
       }
 
-      const attemptedStatement = createAttemptedStatement(currentUser, quizNumber)
+      const launchedStatement = createLaunchedStatement(currentUser, quizNumber)
 
       const res = await fetch('/xAPI/statement', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(attemptedStatement),
+        body: JSON.stringify(launchedStatement),
       });
 
       const data = await res.json();

@@ -8,7 +8,7 @@ interface CurrentUser {
   avatar: string;
 }
 
-export const createAttemptedStatement = (currentUser: CurrentUser | null, quizNumber: number) => {
+export const createLaunchedStatement = (currentUser: CurrentUser | null, quizNumber: number) => {
   const randomGuestNumber = generateRandomNumber();
   const guestName = `Guest${randomGuestNumber}`;
   const guestEmail = `guest${randomGuestNumber}@example.com`;
@@ -19,9 +19,9 @@ export const createAttemptedStatement = (currentUser: CurrentUser | null, quizNu
       "name": currentUser?.username || guestName,
     },
     "verb": {
-      "id": "http://adlnet.gov/expapi/verbs/attempted",
+      "id": "http://adlnet.gov/expapi/verbs/launched",
       "display": {
-        "en": "attempted"
+        "en": "launched"
       }
     },
     "object": {
