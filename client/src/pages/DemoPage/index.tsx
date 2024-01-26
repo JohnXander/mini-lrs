@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { QuizModal } from './components/QuizModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { createLaunchedStatement } from './utils/demoUtils';
+import { createStatement } from './utils/demoUtils';
 import { Link } from 'react-router-dom';
 
 export default function Demo() {
@@ -17,7 +17,11 @@ export default function Demo() {
         return;
       }
 
-      const launchedStatement = createLaunchedStatement(currentUser, quizNumber)
+      const launchedStatement = createStatement({
+        currentUser, 
+        verb: 'launched', 
+        quizNumber
+      });
 
       const res = await fetch('/xAPI/statement', {
         method: 'POST',
@@ -49,6 +53,30 @@ export default function Demo() {
     }
 
     startQuiz(quizNumber);
+  }
+
+  const closeQuiz = async (selectedQuiz: number) => {
+    const terminatedStatement = createStatement({
+      currentUser, 
+      verb: 'terminated', 
+      quizNumber: selectedQuiz
+    });
+
+    const res = await fetch('/xAPI/statement', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(terminatedStatement),
+    });
+
+    const data = await res.json();
+
+    if (data.success === false) {
+      return;
+    }
+    
+    setQuizStarted(false)
   }
 
   return (
@@ -92,7 +120,7 @@ export default function Demo() {
       {quizStarted && selectedQuiz && (
         <QuizModal 
           quizNumber={selectedQuiz} 
-          onRequestClose={() => setQuizStarted(false)}
+          onRequestClose={() => closeQuiz(selectedQuiz)}
         />
       )}
     </div>
