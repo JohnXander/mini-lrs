@@ -9,6 +9,7 @@ import {
   createGuestUserStart,
   createGuestUserSuccess,
 } from '../../redux/guestUser/guestUserSlice';
+import { GuestUser } from './DemoPage.types';
 
 export default function Demo() {
   const [selectedQuiz, setSelectedQuiz] = useState<number | null>(null);
@@ -18,7 +19,10 @@ export default function Demo() {
   const { currentGuestUser } = useSelector((state: RootState) => state.guestUser);
   const dispatch = useDispatch();
 
-  const startQuiz = async (quizNumber: number | null) => {
+  const startQuiz = async (
+    quizNumber: number | null, 
+    newGuestUser?: GuestUser
+  ) => {
     try {
       if (!quizNumber) {
         return;
@@ -26,7 +30,7 @@ export default function Demo() {
 
       const launchedStatement = createStatement({
         currentUser,
-        currentGuestUser,
+        currentGuestUser: newGuestUser || currentGuestUser,
         verb: 'launched', 
         quizNumber
       });
@@ -98,12 +102,14 @@ export default function Demo() {
       const guestName = `Guest${randomGuestNumber}`;
       const guestEmail = `guest${randomGuestNumber}@example.com`;
 
-      dispatch(createGuestUserSuccess({
+      const newGuestUser = {
         username: guestName,
-        email: guestEmail
-      }));
+        email: guestEmail,
+      };
+  
+      dispatch(createGuestUserSuccess(newGuestUser));
 
-      await startQuiz(selectedQuiz)
+      await startQuiz(selectedQuiz, newGuestUser)
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(createGuestUserFailure(error.message));
