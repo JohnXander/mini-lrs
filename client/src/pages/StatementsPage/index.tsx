@@ -22,6 +22,33 @@ export default function Statements() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatement, setSelectedStatement] = useState<Statement | null>(null);
 
+  const handleStatementsOverload = async () => {
+    if (statements.length > 16) {
+      const oldestStatements = Math.floor(statements.length / 2);
+      const statementIdsToDelete = statements
+        .slice(0, oldestStatements)
+        .map((statement) => statement._id);
+
+      try {
+        const res = await fetch('/xAPI/statement', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ statementIds: statementIdsToDelete }),
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        dispatch(fetchStatementsSuccess(statements.slice(oldestStatements)));
+      } catch (error) {
+        console.error('Error deleting statements:', error);
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchStatements = async () => {
       try {
@@ -40,6 +67,8 @@ export default function Statements() {
 
         const data = await res.json();
         dispatch(fetchStatementsSuccess(data));
+
+        handleStatementsOverload();
       } catch (error: unknown) {
         if (error instanceof Error) {
           dispatch(fetchStatementsFailure(error.message));
