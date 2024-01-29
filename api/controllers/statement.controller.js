@@ -30,4 +30,24 @@ export const getAllStatements = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-}
+};
+
+export const deleteStatements = async (req, res, next) => {
+  try {
+    const statementIdsToDelete = req.body.statementIds;
+
+    if (!statementIdsToDelete || !Array.isArray(statementIdsToDelete)) {
+      return next(errorHandler(400, 'The statementIds field must be an array!'));
+    }
+
+    const deletedStatements = await Statement.deleteMany({ _id: { $in: statementIdsToDelete } });
+
+    if (deletedStatements.deletedCount === 0) {
+      return next(errorHandler(404, 'No statements found with the provided statementIds!'));
+    }
+
+    res.status(200).json(deletedStatements);
+  } catch (error) {
+    next(error);
+  }
+};
