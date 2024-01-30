@@ -29,9 +29,9 @@ export default function Statements() {
 
   const handleStatementsOverload = async () => {
     if (statements.length > MAX_STATEMENTS) {
-      const oldestStatements = Math.floor(statements.length / 2);
+      const oldestHalfOfStatements = Math.floor(statements.length / 2);
       const statementIdsToDelete = statements
-        .slice(0, oldestStatements)
+        .slice(0, oldestHalfOfStatements)
         .map((statement) => statement._id);
       
       try {
