@@ -24,6 +24,7 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState<FormData>({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [deleteInitiated, setDeleteInitiated] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -99,21 +100,26 @@ export default function Profile() {
 
   const handleDeleteUser = async () => {
     try {
-      dispatch(deleteUserStart());
+      if (!deleteInitiated) {
+        // If delete action is not initiated, setDeleteInitiated to true
+        setDeleteInitiated(true);
+      } else {
+        // If delete action is initiated, proceed with deletion
+        dispatch(deleteUserStart());
 
-      const res = await fetch(`/api/user/delete/${currentUser?._id}`, {
-        method: 'DELETE',
-      });
+        const res = await fetch(`/api/user/delete/${currentUser?._id}`, {
+          method: 'DELETE',
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
+        if (data.success === false) {
+          dispatch(deleteUserFailure(data.message));
+          return;
+        }
 
-        return;
+        dispatch(deleteUserSuccess(data));
       }
-
-      dispatch(deleteUserSuccess(data));
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(deleteUserFailure(error.message));
@@ -219,7 +225,7 @@ export default function Profile() {
       <span 
         className="text-red-700 cursor-pointer hover:underline"
         onClick={handleDeleteUser}>
-        Delete account
+        {deleteInitiated ? 'Click again to delete account' : 'Delete account'}
       </span>
       <span 
         className="text-red-700 cursor-pointer hover:underline"
