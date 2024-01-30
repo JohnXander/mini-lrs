@@ -23,12 +23,12 @@ export default function Statements() {
   const [selectedStatement, setSelectedStatement] = useState<Statement | null>(null);
 
   const handleStatementsOverload = async () => {
-    if (statements.length > 16) {
+    if (statements.length > 10) {
       const oldestStatements = Math.floor(statements.length / 2);
       const statementIdsToDelete = statements
         .slice(0, oldestStatements)
         .map((statement) => statement._id);
-
+      
       try {
         const res = await fetch('/xAPI/statement', {
           method: 'DELETE',
@@ -42,42 +42,41 @@ export default function Statements() {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
 
-        dispatch(fetchStatementsSuccess(statements.slice(oldestStatements)));
+        await fetchStatements();
       } catch (error) {
         console.error('Error deleting statements:', error);
       }
     }
   };
 
-  useEffect(() => {
-    const fetchStatements = async () => {
-      try {
-        dispatch(fetchStatementsStart());
+  const fetchStatements = async () => {
+    try {
+      handleStatementsOverload();
+      dispatch(fetchStatementsStart());
 
-        const res = await fetch('/xAPI/statement', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+      const res = await fetch('/xAPI/statement', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        dispatch(fetchStatementsSuccess(data));
-
-        handleStatementsOverload();
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          dispatch(fetchStatementsFailure(error.message));
-        } else {
-          console.error('Unexpected error:', error);
-        }
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
       }
-    };
 
+      const data = await res.json();
+      dispatch(fetchStatementsSuccess(data));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(fetchStatementsFailure(error.message));
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
     fetchStatements();
   }, [dispatch]);
 
