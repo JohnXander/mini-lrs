@@ -23,6 +23,10 @@ export default function Statements() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatement, setSelectedStatement] = useState<Statement | null>(null);
 
+  useEffect(() => {
+    fetchStatements();
+  }, [dispatch]);
+
   const handleStatementsOverload = async () => {
     if (statements.length > MAX_STATEMENTS) {
       const oldestStatements = Math.floor(statements.length / 2);
@@ -76,10 +80,6 @@ export default function Statements() {
       }
     }
   };
-
-  useEffect(() => {
-    fetchStatements();
-  }, [dispatch]);
 
   return (
     <div className="p-3 max-w-6xl mx-auto">
