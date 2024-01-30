@@ -15,6 +15,7 @@ import {
   getVerbEmoji 
 } from './utils/statementUtils';
 import { formatDistanceToNow } from 'date-fns';
+import { MAX_STATEMENTS } from './constants/statementConstants';
 
 export default function Statements() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function Statements() {
   const [selectedStatement, setSelectedStatement] = useState<Statement | null>(null);
 
   const handleStatementsOverload = async () => {
-    if (statements.length > 10) {
+    if (statements.length > MAX_STATEMENTS) {
       const oldestStatements = Math.floor(statements.length / 2);
       const statementIdsToDelete = statements
         .slice(0, oldestStatements)
