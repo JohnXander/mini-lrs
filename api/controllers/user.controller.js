@@ -50,3 +50,17 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   };
 }
+
+export const getAllUsers = async (req, res, next) => {
+  try {
+    const allUsers = await User.find();
+
+    if(allUsers.length === 0){
+      return next(errorHandler(404, 'No users found in the database!'));
+    }
+
+    res.status(200).json(allUsers);
+  } catch (error) {
+    next(error);
+  }
+};
