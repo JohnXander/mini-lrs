@@ -101,10 +101,8 @@ export default function Profile() {
   const handleDeleteUser = async () => {
     try {
       if (!deleteInitiated) {
-        // If delete action is not initiated, setDeleteInitiated to true
         setDeleteInitiated(true);
       } else {
-        // If delete action is initiated, proceed with deletion
         dispatch(deleteUserStart());
 
         const res = await fetch(`/api/user/delete/${currentUser?._id}`, {
