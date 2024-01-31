@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
+  },
+  isLearner: {
+    type: Boolean,
+    default: false,
   }
 }, { timestamps: true });
 
