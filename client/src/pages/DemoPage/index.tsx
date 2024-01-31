@@ -10,6 +10,7 @@ import {
   createGuestUserSuccess,
 } from '../../redux/guestUser/guestUserSlice';
 import { GuestUser } from './DemoPage.types';
+import { updateUserFailure, updateUserStart, updateUserSuccess } from '../../redux/user/userSlice';
 
 export default function Demo() {
   const [selectedQuiz, setSelectedQuiz] = useState<number | null>(null);
@@ -65,6 +66,7 @@ export default function Demo() {
     }
 
     startQuiz(quizNumber);
+    promoteUserToLearner();
   }
 
   const closeQuiz = async (selectedQuiz: number) => {
@@ -113,6 +115,40 @@ export default function Demo() {
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(createGuestUserFailure(error.message));
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+  }
+
+  const promoteUserToLearner = async () => {
+    try {
+      if (!currentUser) {
+        throw new Error('User is not authenticated.');
+      }
+
+      dispatch(updateUserStart());
+
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isLearner: true }),
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(updateUserFailure(error.message));
       } else {
         console.error('Unexpected error:', error);
       }
