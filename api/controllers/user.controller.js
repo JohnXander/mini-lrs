@@ -51,15 +51,15 @@ export const deleteUser = async (req, res, next) => {
   };
 }
 
-export const getAllUsers = async (req, res, next) => {
+export const getAllLearners = async (req, res, next) => {
   try {
-    const allUsers = await User.find();
+    const allLearners = await User.find({ isLearner: true });
 
-    if(allUsers.length === 0){
+    if(allLearners.length === 0){
       return next(errorHandler(404, 'No users found in the database!'));
     }
 
-    res.status(200).json(allUsers);
+    res.status(200).json(allLearners);
   } catch (error) {
     next(error);
   }
