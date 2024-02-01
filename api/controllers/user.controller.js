@@ -64,3 +64,23 @@ export const getAllLearners = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteManyUsers = async (req, res, next) => {
+  try {
+    const userIdsToDelete = req.body.userIds;
+
+    if (!userIdsToDelete || !Array.isArray(userIdsToDelete)) {
+      return next(errorHandler(400, 'The userIds field must be an array!'));
+    }
+
+    const deletedUsers = await User.deleteMany({ _id: { $in: userIdsToDelete } });
+
+    if (deletedUsers.deletedCount === 0) {
+      return next(errorHandler(404, 'No users found with the provided userIds!'));
+    }
+
+    res.status(200).json(deletedUsers);
+  } catch (error) {
+    next(error);
+  }
+};
