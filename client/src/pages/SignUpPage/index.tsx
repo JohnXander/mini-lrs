@@ -9,17 +9,27 @@ export default function SignUp() {
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    if (e.target.id === "passwordConfirmation") {
+      setPasswordConfirmation(e.target.value);
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formData.password !== passwordConfirmation) {
+      setError("Password and confirmation do not match");
+      return;
+    }
     
     try {
       setLoading(true);
@@ -77,6 +87,13 @@ export default function SignUp() {
           id="password"
           type="password"
           placeholder="password"
+          className="border p-3 rounded-lg"
+          onChange={handleChange}
+        />
+        <input
+          id="passwordConfirmation"
+          type="password"
+          placeholder="confirm password"
           className="border p-3 rounded-lg"
           onChange={handleChange}
         />
