@@ -5,6 +5,7 @@ import { fetchUsersFailure, fetchUsersStart, fetchUsersSuccess } from "../../red
 import { User } from "./Learners.types";
 import { LearnerModal } from "./components/LearnerModal";
 import { formatDistanceToNow } from 'date-fns';
+import { MAX_LEARNERS } from "./constants/learnerConstants";
 
 export default function Learners() {
   const { allUsers, loading, error } = useSelector((state: RootState) => state.user);
@@ -16,8 +17,38 @@ export default function Learners() {
     fetchUsers();
   }, [dispatch]);
 
+  const handleUsersOverload = async () => {
+    if (allUsers.length > MAX_LEARNERS) {
+      const oldestHalfOfUsers = Math.floor(allUsers.length / 2);
+      const userIdsToDelete = allUsers
+        .slice(0, oldestHalfOfUsers)
+        .map((user) => user._id);
+      
+      console.log(userIdsToDelete)
+
+      try {
+        const res = await fetch('/api/user/delete', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userIds: userIdsToDelete }),
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        await fetchUsers();
+      } catch (error) {
+        console.error('Error deleting statements:', error);
+      }
+    }
+  };
+
   const fetchUsers = async () => {
     try {
+      handleUsersOverload();
       dispatch(fetchUsersStart());
 
       const res = await fetch('/api/user', {
