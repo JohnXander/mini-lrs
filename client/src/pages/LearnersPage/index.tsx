@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchUsersFailure, fetchUsersStart, fetchUsersSuccess } from "../../redux/user/userSlice";
+import { User } from "./Learners.types";
+import { LearnerModal } from "./components/LearnerModal";
 
 export default function Learners() {
   const { allUsers, loading, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -49,11 +53,21 @@ export default function Learners() {
           {allUsers.map((user, index) => (
             <li 
               className='flex justify-between gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200' 
-              key={index}>
+              key={index}
+              onClick={() => {
+                setSelectedUser(user);
+                setIsModalOpen(true);
+              }}>
               {user.username}
             </li>
           ))}
         </ul>
+      )}
+      {isModalOpen && selectedUser && (
+        <LearnerModal
+          learner={selectedUser}
+          onRequestClose={() => setIsModalOpen(false)}
+        />
       )}
     </div>
   )
