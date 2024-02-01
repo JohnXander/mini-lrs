@@ -188,7 +188,7 @@ export default function Demo() {
               onClick={continueAsGuest}
               className="text-green-700 cursor-pointer hover:underline"
             >
-              Continue as Guest
+              Continue as Temporary Guest
             </span>
           </span>
         </p>
