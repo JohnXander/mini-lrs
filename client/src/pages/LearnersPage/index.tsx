@@ -49,7 +49,7 @@ export default function Learners() {
       </h1>
       {loading && <p>Loading learners...</p>}
       {error && <p>Error: {error}</p>}
-      {!loading && !error && (
+      {!loading && !error && allUsers && (
         <ul className='flex flex-col gap-1'>
           {allUsers.slice().reverse().map((user, index) => (
             <li 
