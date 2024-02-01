@@ -117,6 +117,7 @@ export default function Profile() {
         }
 
         dispatch(deleteUserSuccess(data));
+        deleteUserStatements();
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -147,6 +148,24 @@ export default function Profile() {
         console.error('Unexpected error:', error);
       }
     }
+  }
+
+  const deleteUserStatements = async () => {
+      try {
+        const res = await fetch('/xAPI/statement/userStatements', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userEmail: `mailto:${currentUser?.email}` }),
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+      } catch (error) {
+        console.error('Error deleting statements:', error);
+      }
   }
 
   return (
