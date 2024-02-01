@@ -51,3 +51,23 @@ export const deleteStatements = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteAllUserStatements = async (req, res, next) => {
+  try {
+    const { userEmail } = req.body;
+
+    if (!userEmail) {
+      return next(errorHandler(400, 'Must provide a user email!'));
+    }
+
+    const deletedStatements = await Statement.deleteMany({'actor.mbox': userEmail});
+
+    if (deletedStatements.deletedCount === 0) {
+      return next(errorHandler(404, 'No statements found with the provided user!'));
+    }
+
+    res.status(200).json(deletedStatements);
+  } catch (error) {
+    next(error);
+  }
+};
