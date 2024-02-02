@@ -2,6 +2,7 @@ import Modal from "react-modal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { QuizModalProps } from "./QuizModal.types";
+import { Quiz } from "./Quiz";
 
 export const QuizModal = ({ quizNumber, onRequestClose }: QuizModalProps) => (
   <Modal
@@ -30,7 +31,7 @@ export const QuizModal = ({ quizNumber, onRequestClose }: QuizModalProps) => (
       <button onClick={onRequestClose} className="float-right">
         <FontAwesomeIcon icon={faTimes} />
       </button>
-      <div>{`Quiz ${quizNumber}`}</div>
+      <Quiz quizNumber={quizNumber} />
     </div>
   </Modal>
 )
