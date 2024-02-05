@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { QuizModal } from './components/QuizModal';
+import { QuizModal } from './components/QuizModal/QuizModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { createStatement } from './utils/demoUtils';
