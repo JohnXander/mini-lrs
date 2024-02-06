@@ -1,8 +1,51 @@
+import { useState } from "react";
 import { quizData } from "../../data/quizData";
 import { QuizProps, QuizQuestion } from "./Quiz.types";
+import { createStatement } from "../../utils/demoUtils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+import { useNavigate } from "react-router-dom";
 
 export const Quiz = ({ quizNumber }: QuizProps) => {
   const questions = (quizData as Record<number, QuizQuestion[]>)[quizNumber];
+  const [formData, setFormData] = useState({ 1: '', 2: '', 3: '' });
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentGuestUser } = useSelector((state: RootState) => state.guestUser);
+  const navigate = useNavigate();
+
+  const isEmptyAnswers = Object.values(formData).some(answer => answer === '');
+
+  const handleChange = (option: string, index: number) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [index + 1]: option,
+    }));
+  };
+
+  const completeQuiz = async () => {
+    const completedStatement = createStatement({
+      currentUser,
+      currentGuestUser,
+      verb: 'completed', 
+      quizNumber,
+    });
+
+    const res = await fetch('/xAPI/statement', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(completedStatement),
+    });
+
+    const data = await res.json();
+
+    if (data.success === false) {
+      return;
+    }
+
+    navigate('/');
+  }
 
   if (!questions) {
     return <div>No quiz found for the specified number.</div>;
@@ -13,7 +56,9 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
       <h1 className="text-4xl font-semibold text-center my-7">
         {`Quiz ${quizNumber}`}
       </h1>
-      <form className="flex flex-col items-start gap-8">
+      <form 
+        className="flex flex-col items-start gap-8"
+        onSubmit={completeQuiz}>
         {questions.map((q: QuizQuestion, index: number) => (
           <div
             className="flex flex-col"
@@ -27,6 +72,7 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
                     type="radio" 
                     name={`quiz${quizNumber}_question${index}`} 
                     value={option} 
+                    onChange={() => handleChange(option, index)}
                   />
                   {` ${String.fromCharCode(97 + i)}. ${option}`}
                 </label>
@@ -36,7 +82,8 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
         ))}
         <button
           className="self-center w-full bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
-          type="submit">
+          type="submit"
+          disabled={isEmptyAnswers}>
             Submit
           </button>
       </form>
