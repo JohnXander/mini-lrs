@@ -1,15 +1,16 @@
-import { CreateStatementProps } from "./demoUtils.types";
+import { CreateStatementProps, xapiStatement } from "./demoUtils.types";
 
 export const createStatement = ({ 
   currentUser, 
   currentGuestUser,
   verb, 
-  quizNumber
+  quizNumber,
+  score
 }: CreateStatementProps) => {
   const username = currentUser?.username || currentGuestUser?.username;
   const email = currentUser?.email || currentGuestUser?.email;
 
-  return {
+  const statement = {
     "actor": {
       "mbox": `mailto:${email}`,
       "name": username,
@@ -29,5 +30,17 @@ export const createStatement = ({
         }
       }
     }
-  };
+  } as xapiStatement;
+
+  if (score !== undefined && score !== null) {
+    statement.result = {
+      "score": {
+        "raw": score,
+        "min": 0,
+        "max": 3
+      }
+    };
+  }
+
+  return statement;
 };

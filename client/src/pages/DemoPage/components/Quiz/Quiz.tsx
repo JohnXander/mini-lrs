@@ -27,11 +27,16 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
   const completeQuiz = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const correctAnswers = questions.map((q) => q.correctAnswer);
+    const submittedAnswers = Object.values(formData);
+    const score = correctAnswers.filter((answer, index) => answer === submittedAnswers[index]).length;
+
     const completedStatement = createStatement({
       currentUser,
       currentGuestUser,
       verb: 'completed', 
       quizNumber,
+      score,
     });
 
     const res = await fetch('/xAPI/statement', {
