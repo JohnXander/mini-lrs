@@ -13,6 +13,23 @@ const statementSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  result: {
+    type: {
+      score: {
+        type: {
+          raw: {
+            type: Number,
+          },
+          min: {
+            type: Number,
+          },
+          max: {
+            type: Number,
+          }
+        }
+      }
+    }
+  }
 }, { timestamps: true });
 
 const Statement = mongoose.model('Statement', statementSchema);
