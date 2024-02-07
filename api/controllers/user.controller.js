@@ -25,6 +25,7 @@ export const updateUser = async (req, res, next) => {
         password: req.body.password,
         avatar: req.body.avatar,
         isLearner: req.body.isLearner,
+        completedQuizzes: req.body.completedQuizzes,
       }
     }, {new: true});
 

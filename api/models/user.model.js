@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
   isLearner: {
     type: Boolean,
     default: false,
+  },
+  completedQuizzes: {
+    type: Number,
+    default: 0
   }
 }, { timestamps: true });
 
