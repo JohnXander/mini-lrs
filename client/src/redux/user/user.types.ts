@@ -5,6 +5,7 @@ interface User {
   avatar: string;
   isLearner: boolean;
   createdAt: string;
+  completedQuizzes: number;
 }
 
 export interface UserState {
@@ -14,7 +15,7 @@ export interface UserState {
     email: string;
     password: string;
     avatar: string;
-    completedQuizzes: string;
+    completedQuizzes: number;
   } | null;
   error: string | null;
   loading: boolean;
