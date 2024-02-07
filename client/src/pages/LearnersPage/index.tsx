@@ -8,7 +8,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { MAX_LEARNERS } from "./constants/learnerConstants";
 
 export default function Learners() {
-  const { allUsers, loading, error } = useSelector((state: RootState) => state.user);
+  const { allUsers, currentUser, loading, error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -98,7 +98,8 @@ export default function Learners() {
                 <p 
                   className='text-slate-700 max-w-[200px] overflow-hidden overflow-ellipsis whitespace-nowrap'
                   title={user._id}>
-                  {user.username}
+                  <span>{user.username} </span>
+                  <span>{currentUser?._id === user._id && '(you)'}</span>
                 </p>
               </div>
               <p 

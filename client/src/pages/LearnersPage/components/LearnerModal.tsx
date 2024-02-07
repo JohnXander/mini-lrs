@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { LearnerModalProps } from "./LearnerModal.types";
 import { format } from 'date-fns';
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => {
   const formattedDate = format(new Date(learner.createdAt), 'MMMM d, yyyy');
+  const { currentUser } = useSelector((state: RootState) => state.user);
 
   return (
     <Modal
@@ -36,7 +39,8 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
         </button>
         <div className="max-w-lg mx-auto border border-gray-100 p-3">
           <h1 className="text-3xl font-semibold text-center">
-            {learner.username}
+            <span>{learner.username} </span>
+            <span>{currentUser?._id === learner._id && '(you)'}</span>
           </h1>
           <div className="flex flex-col gap-4">
             <img 
