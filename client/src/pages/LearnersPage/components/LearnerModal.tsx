@@ -33,37 +33,39 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
         },
       }}
     >
-      <div>
-        <button onClick={onRequestClose} className="float-right">
+      <div className="flex flex-col h-full relative">
+        <button onClick={onRequestClose} className="absolute top-0 right-0">
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <div className="max-w-lg mx-auto border border-gray-100 p-3">
-          <h1 className="text-3xl font-semibold text-center">
-            <span>{learner.username} </span>
-            <span>{currentUser?._id === learner._id && '(you)'}</span>
-          </h1>
-          <div className="flex flex-col gap-4">
-            <img 
-              src={learner.avatar} 
-              className="rounded-full h-24 w-24 object-cover self-center my-6"
-            />
+        <div className="flex-grow flex items-center justify-center">
+          <div>
+            <h1 className="text-3xl font-semibold text-center">
+              <span>{learner.username} </span>
+              <span>{currentUser?._id === learner._id && '(you)'}</span>
+            </h1>
+            <div className="flex flex-col gap-4">
+              <img 
+                src={learner.avatar} 
+                className="rounded-full h-24 w-24 object-cover self-center my-6"
+              />
+            </div>
+            <p className="text-center">
+              <span className='text-slate-700'>
+                {`Joined: `}
+              </span>
+              <span className='text-slate-700 font-bold'>
+                {formattedDate}
+              </span>
+            </p>
+            <p className="text-center">
+              <span className='text-slate-700'>
+                {`Completed Quizzes: `}
+              </span>
+              <span className='text-slate-700 font-bold'>
+                {learner.completedQuizzes}
+              </span>
+            </p>
           </div>
-          <p className="text-center">
-            <span className='text-slate-700'>
-              {`Joined: `}
-            </span>
-            <span className='text-slate-700 font-bold'>
-              {formattedDate}
-            </span>
-          </p>
-          <p className="text-center">
-            <span className='text-slate-700'>
-              {`Completed Quizzes: `}
-            </span>
-            <span className='text-slate-700 font-bold'>
-              {learner.completedQuizzes}
-            </span>
-          </p>
         </div>
       </div>
     </Modal>
