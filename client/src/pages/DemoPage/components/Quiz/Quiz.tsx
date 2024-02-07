@@ -2,8 +2,9 @@ import { useState } from "react";
 import { quizData } from "../../data/quizData";
 import { QuizProps, QuizQuestion } from "./Quiz.types";
 import { createStatement } from "../../utils/demoUtils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import { updateUserFailure, updateUserStart, updateUserSuccess } from "../../../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export const Quiz = ({ quizNumber }: QuizProps) => {
@@ -11,6 +12,7 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
   const [formData, setFormData] = useState({ 1: '', 2: '', 3: '' });
   const { currentUser } = useSelector((state: RootState) => state.user);
   const { currentGuestUser } = useSelector((state: RootState) => state.guestUser);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const isEmptyAnswers = Object.values(formData).some(answer => answer === '');
@@ -22,7 +24,9 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
     }));
   };
 
-  const completeQuiz = async () => {
+  const completeQuiz = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     const completedStatement = createStatement({
       currentUser,
       currentGuestUser,
@@ -44,7 +48,43 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
       return;
     }
 
+    updateCompletedQuizzes();
     navigate('/');
+  }
+
+  const updateCompletedQuizzes = async () => {
+    try {
+      if (!currentUser) {
+        throw new Error('User is not authenticated.');
+      }
+
+      dispatch(updateUserStart());
+
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ completedQuizzes: currentUser.completedQuizzes + 1 }),
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(updateUserFailure(error.message));
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+
   }
 
   if (!questions) {

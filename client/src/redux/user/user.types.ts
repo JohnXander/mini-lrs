@@ -14,6 +14,7 @@ export interface UserState {
     email: string;
     password: string;
     avatar: string;
+    completedQuizzes: string;
   } | null;
   error: string | null;
   loading: boolean;
