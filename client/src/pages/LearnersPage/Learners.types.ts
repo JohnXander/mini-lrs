@@ -5,4 +5,5 @@ export interface User {
   avatar: string;
   isLearner: boolean;
   createdAt: string;
+  completedQuizzes: number;
 }

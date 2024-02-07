@@ -56,6 +56,14 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
               {formattedDate}
             </span>
           </p>
+          <p className="text-center">
+            <span className='text-slate-700'>
+              {`Completed Quizzes: `}
+            </span>
+            <span className='text-slate-700 font-bold'>
+              {learner.completedQuizzes}
+            </span>
+          </p>
         </div>
       </div>
     </Modal>
