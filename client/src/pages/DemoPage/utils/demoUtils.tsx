@@ -32,7 +32,7 @@ export const createStatement = ({
     }
   } as xapiStatement;
 
-  if (score !== undefined && score !== null) {
+  if (score !== -1) {
     statement.result = {
       "score": {
         "raw": score,

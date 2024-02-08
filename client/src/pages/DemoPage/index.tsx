@@ -33,7 +33,8 @@ export default function Demo() {
         currentUser,
         currentGuestUser: newGuestUser || currentGuestUser,
         verb: 'launched', 
-        quizNumber
+        quizNumber,
+        score: -1,
       });
 
       const res = await fetch('/xAPI/statement', {
@@ -74,7 +75,8 @@ export default function Demo() {
       currentUser,
       currentGuestUser,
       verb: 'terminated', 
-      quizNumber: selectedQuiz
+      quizNumber: selectedQuiz,
+      score: -1
     });
 
     const res = await fetch('/xAPI/statement', {
