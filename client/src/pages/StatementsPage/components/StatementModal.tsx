@@ -18,6 +18,7 @@ export const StatementModal = ({ statement, onRequestClose }: StatementModalProp
         transform: "translate(-50%, -50%)",
         width: "80%",
         maxWidth: "1000px",
+        height: "60%",
         padding: "20px",
         borderRadius: "8px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
