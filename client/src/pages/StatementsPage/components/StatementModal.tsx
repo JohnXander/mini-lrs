@@ -2,6 +2,8 @@ import Modal from "react-modal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { StatementModalProps } from "./StatementModal.types";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { coldarkCold } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export const StatementModal = ({ statement, onRequestClose }: StatementModalProps) => (
   <Modal
@@ -23,7 +25,7 @@ export const StatementModal = ({ statement, onRequestClose }: StatementModalProp
         borderRadius: "8px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
         color: "#334155",
-        backgroundColor: "rgb(241, 245, 241)",
+        backgroundColor: "rgb(227, 234, 242)",
       },
     }}
   >
@@ -31,7 +33,9 @@ export const StatementModal = ({ statement, onRequestClose }: StatementModalProp
       <button onClick={onRequestClose} className="float-right">
         <FontAwesomeIcon icon={faTimes} />
       </button>
-      <pre>{JSON.stringify(statement, null, 2)}</pre>
+      <SyntaxHighlighter language="json" style={coldarkCold}>
+        {JSON.stringify(statement, null, 2)}
+      </SyntaxHighlighter>
     </div>
   </Modal>
 );
