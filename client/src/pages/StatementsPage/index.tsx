@@ -67,7 +67,9 @@ export default function Statements() {
       });
 
       if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
+        const errorText = await res.text();
+        const errorJson = JSON.parse(errorText);
+        throw new Error(errorJson.message);
       }
 
       const data = await res.json();
