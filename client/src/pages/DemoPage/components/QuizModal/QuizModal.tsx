@@ -25,6 +25,7 @@ export const QuizModal = ({ quizNumber, onRequestClose }: QuizModalProps) => (
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
         color: "#334155",
         backgroundColor: "rgb(241, 245, 241)",
+        scrollbarColor: 'lightgrey transparent'
       },
     }}
   >

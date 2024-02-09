@@ -26,6 +26,7 @@ export const StatementModal = ({ statement, onRequestClose }: StatementModalProp
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
         color: "#334155",
         backgroundColor: "rgb(227, 234, 242)",
+        scrollbarColor: 'lightgrey transparent'
       },
     }}
   >
