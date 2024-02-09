@@ -1,1 +1,1 @@
-export const MAX_STATEMENTS = 10;
+export const MAX_STATEMENTS = 100;

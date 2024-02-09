@@ -1,1 +1,1 @@
-export const MAX_LEARNERS = 10;
+export const MAX_LEARNERS = 100;
