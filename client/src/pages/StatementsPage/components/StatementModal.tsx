@@ -34,7 +34,10 @@ export const StatementModal = ({ statement, onRequestClose }: StatementModalProp
       <button onClick={onRequestClose} className="float-right">
         <FontAwesomeIcon icon={faTimes} />
       </button>
-      <SyntaxHighlighter language="json" style={coldarkCold}>
+      <SyntaxHighlighter 
+        language="json" 
+        style={coldarkCold} 
+        className='text-xs sm:text-base'>
         {JSON.stringify(statement, null, 2)}
       </SyntaxHighlighter>
     </div>
