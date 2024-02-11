@@ -14,7 +14,7 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
     <Modal
       isOpen={true}
       onRequestClose={onRequestClose}
-      className='w-max sm:w-4/12 border'
+      className='w-max sm:w-4/12'
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.5)",

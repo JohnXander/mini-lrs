@@ -77,7 +77,7 @@ export default function Learners() {
 
   return (
     <div className="p-3 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-center my-7">
         Learners
       </h1>
       {loading && <p>Loading learners...</p>}

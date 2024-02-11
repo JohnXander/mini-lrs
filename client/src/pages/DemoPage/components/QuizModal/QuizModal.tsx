@@ -17,7 +17,7 @@ export const QuizModal = ({ quizNumber, onRequestClose }: QuizModalProps) => (
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: "50%",
+        width: "100%",
         maxWidth: "1000px",
         height: "60%",
         padding: "20px",

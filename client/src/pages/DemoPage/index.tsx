@@ -159,19 +159,19 @@ export default function Demo() {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-center my-7">
         Demo
       </h1>
-      <div className="text-center mb-5">
+      <div className="text-center mb-5 text-sm sm:text-base pb-4">
         <p>These are short quizzes to show how an LMS interacts with an LRS.</p>
         <p>There will only be 3 multiple-choice questions per quiz.</p>
         <p>Select a quiz to start:</p>
       </div>
-      <div className="text-center mb-5 flex gap-3 flex-wrap justify-center">
+      <div className="text-center mb-5 flex gap-3 flex-wrap flex-col sm:flex-row justify-center items-center">
         {[1, 2, 3].map((quizNumber) => (
           <button
             key={quizNumber}
-            className='bg-slate-700 text-white rounded-lg py-3 px-6 uppercase hover:opacity-95 disabled:opacity-80'
+            className='bg-slate-700 text-white rounded-lg py-3 px-12 sm:px-6 uppercase hover:opacity-95 disabled:opacity-80 w-fit text-sm sm:text-base'
             onClick={() => handleQuizStart(quizNumber)}
             disabled={loading}
           >

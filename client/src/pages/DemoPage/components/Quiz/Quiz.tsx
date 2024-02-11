@@ -97,8 +97,8 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
   }
 
   return (
-    <div className="p-3 max-w-lg mx-auto mb-7">
-      <h1 className="text-4xl font-semibold text-center my-7">
+    <div className="p-0 lg:p-3 max-w-lg mx-auto mb-7">
+      <h1 className="text-2xl lg:text-4xl font-semibold text-center my-7">
         {`Quiz ${quizNumber}`}
       </h1>
       <form 
@@ -108,10 +108,10 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
           <div
             className="flex flex-col"
             key={index}>
-            <p className="text-2xl mb-3">{`${index + 1}. ${q.question}`}</p>
+            <p className="text-md lg:text-2xl mb-3">{`${index + 1}. ${q.question}`}</p>
             <div className="flex flex-col">
               {q.options.map((option, i) => (
-                <label className="text-xl" key={i}>
+                <label className="text-sm lg:text-xl" key={i}>
                   <input
                     className="mr-2 h-4 w-4 cursor-pointer"
                     type="radio" 
@@ -126,7 +126,7 @@ export const Quiz = ({ quizNumber }: QuizProps) => {
           </div>
         ))}
         <button
-          className="self-center w-full bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+          className="self-center w-fit bg-slate-700 text-white rounded-lg py-3 px-6 lg:px-12 uppercase hover:opacity-95 disabled:opacity-80 text-sm sm:text-base"
           type="submit"
           disabled={isEmptyAnswers}>
             Submit
