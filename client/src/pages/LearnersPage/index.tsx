@@ -86,7 +86,7 @@ export default function Learners() {
         <ul className='flex flex-col gap-1'>
           {allUsers.slice().reverse().map((user, index) => (
             <li 
-              className='flex justify-between items-center gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200 flex-wrap' 
+              className='text-sm sm:text-base flex justify-between items-center gap-2 border border-slate-200 p-2 hover:cursor-pointer hover:bg-slate-200 flex-wrap' 
               key={index}
               onClick={() => {
                 setSelectedUser(user);

@@ -14,6 +14,7 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
     <Modal
       isOpen={true}
       onRequestClose={onRequestClose}
+      className='w-max sm:w-4/12 border'
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -23,10 +24,9 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "30%",
           maxWidth: "1000px",
           height: "40%",
-          padding: "20px",
+          padding: "20px 40px",
           borderRadius: "8px",
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
           color: "#334155",
@@ -40,7 +40,7 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
         </button>
         <div className="flex-grow flex items-center justify-center">
           <div>
-            <h1 className="text-3xl font-semibold text-center">
+            <h1 className="text-xl lg:text-3xl font-semibold text-center">
               <span>{learner.username} </span>
               <span>{currentUser?._id === learner._id && '(you)'}</span>
             </h1>
@@ -50,7 +50,7 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
                 className="rounded-full h-24 w-24 object-cover self-center my-6"
               />
             </div>
-            <p className="text-center">
+            <p className="text-center text-sm lg:text-base">
               <span className='text-slate-700'>
                 {`Joined: `}
               </span>
@@ -58,7 +58,7 @@ export const LearnerModal = ({ learner, onRequestClose }: LearnerModalProps) => 
                 {formattedDate}
               </span>
             </p>
-            <p className="text-center">
+            <p className="text-center text-sm lg:text-base">
               <span className='text-slate-700'>
                 {`Completed Quizzes: `}
               </span>
