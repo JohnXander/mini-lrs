@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileLines, faUsers, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faFileLines, faUsers, faPlay, faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 
 export default function Header() {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -44,8 +44,9 @@ export default function Header() {
                   className='rounded-full h-7 w-7 object-cover'
                 />
               ) : (
-                <li className='hidden sm:inline text-slate-700 hover:underline cursor-pointer'>
-                  Sign In
+                <li className='text-slate-700 hover:underline cursor-pointer'>
+                  <FontAwesomeIcon className='sm:hidden' icon={faRightToBracket} />
+                  <span className='hidden sm:inline-block'>Sign In</span>
                 </li>
               )
             }
