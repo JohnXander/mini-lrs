@@ -12,16 +12,18 @@ export default function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route path="/" element={<Statements />} />
-        <Route path="/learners" element={<Learners />} />
-        <Route path="/demo" element={<Demo />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="profile" element={<Profile />} />
-        </Route>
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-      </Routes>
+      <div className="pt-16">
+        <Routes>
+          <Route path="/" element={<Statements />} />
+          <Route path="/learners" element={<Learners />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="profile" element={<Profile />} />
+          </Route>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }
